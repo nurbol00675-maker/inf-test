@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Информатика пәнінен тест — педагогтерге арналған кәсіби біліктілік тесті.">
+    <title>Информатика пәнінен біліктілік тесті</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 bg-cover bg-center min-h-screen flex items-center justify-center p-4 relative" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1920');">
+
+    <div class="bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl w-full max-w-2xl overflow-hidden border border-slate-700/50">
+        
+        <!-- Header with Teacher / Tech Image Banner -->
+        <div class="relative h-48 bg-indigo-900 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1000" alt="Teacher background" class="w-full h-full object-cover mix-blend-overlay" style="opacity: 0.35;">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-6 right-6 text-white">
+                <span class="bg-indigo-500 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">Педагогтерге арналған</span>
+                <h1 class="text-2xl font-bold mt-1">Информатика пәнінен тест</h1>
+                <p class="text-slate-300 text-xs mt-0.5">Кәсіби біліктілік пен заманауи технологияларды меңгеру деңгейі</p>
+            </div>
+        </div>
+
+        <!-- PAGE 1: User Info Form -->
+        <div id="page1" class="p-8">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-lg">1</div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Жеке мәліметтерді толтырыңыз</h2>
+                    <p class="text-xs text-slate-500">Тестті бастамас бұрын деректеріңізді енгізіңіз</p>
+                </div>
+            </div>
+            
+            <form id="userInfoForm" onsubmit="goToQuiz(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Аты-жөніңіз:</label>
+                    <input type="text" id="fullName" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition text-sm font-medium text-slate-800" placeholder="Мысалы: Айдар Смағұлұлы">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Мектеп / Сынып / Кафедра:</label>
+                    <input type="text" id="className" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition text-sm font-medium text-slate-800" placeholder="Мысалы: №12 мектеп / Информатика кафедрасы">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Күні:</label>
+                    <input type="date" id="testDate" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:outline-none transition text-sm font-medium text-slate-800">
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-indigo-600/20 mt-4 flex items-center justify-center gap-2">
+                    <span>Тестті бастау</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- PAGE 2: Quiz (5 Questions) -->
+        <div id="page2" class="p-8 hidden">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Тест сұрақтары (5 сұрақ)</h2>
+                    <p class="text-xs text-slate-500">Әр сұрақтың бір ғана дұрыс жауабы бар</p>
+                </div>
+                <span id="userInfoDisplay" class="text-xs font-semibold bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full border border-indigo-100"></span>
+            </div>
+
+            <form id="quizForm" onsubmit="submitQuiz(event)" class="space-y-6">
+                <!-- Question 1 -->
+                <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-semibold text-sm text-slate-800 mb-3">1. Алгоритм қасиеттеріне жатпайтын элементті көрсетіңіз:</p>
+                    <div class="space-y-2 text-sm text-slate-700">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q1" value="a" required class="text-indigo-600 focus:ring-indigo-500"><span>Дискреттілік</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q1" value="b" class="text-indigo-600 focus:ring-indigo-500"><span>Нәтижелілік</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q1" value="c" class="text-indigo-600 focus:ring-indigo-500"><span class="font-medium text-indigo-900">Хаос (ретсіздік)</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q1" value="d" class="text-indigo-600 focus:ring-indigo-500"><span>Түсініктілік</span></label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-semibold text-sm text-slate-800 mb-3">2. Python тілінде айнымалыны анықтау үшін қандай таңба қолданылады?</p>
+                    <div class="space-y-2 text-sm text-slate-700">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q2" value="a" required class="text-indigo-600 focus:ring-indigo-500"><span>==</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q2" value="b" class="text-indigo-600 focus:ring-indigo-500"><span>=</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q2" value="c" class="text-indigo-600 focus:ring-indigo-500"><span>:=</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q2" value="d" class="text-indigo-600 focus:ring-indigo-500"><span>-></span></label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-semibold text-sm text-slate-800 mb-3">3. Компьютердің жадысы негізгі болып қандай түрлерге бөлінеді?</p>
+                    <div class="space-y-2 text-sm text-slate-700">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q3" value="a" required class="text-indigo-600 focus:ring-indigo-500"><span>RAM және ROM (Жедел және тұрақты жады)</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q3" value="b" class="text-indigo-600 focus:ring-indigo-500"><span>HDD және SSD</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q3" value="c" class="text-indigo-600 focus:ring-indigo-500"><span>Флешка және диск</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q3" value="d" class="text-indigo-600 focus:ring-indigo-500"><span>Кэш және регистр</span></label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-semibold text-sm text-slate-800 mb-3">4. Веб-беттердің құрылымын сипаттау үшін қолданылатын тіл:</p>
+                    <div class="space-y-2 text-sm text-slate-700">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q4" value="a" required class="text-indigo-600 focus:ring-indigo-500"><span>CSS</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q4" value="b" class="text-indigo-600 focus:ring-indigo-500"><span>HTML</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q4" value="c" class="text-indigo-600 focus:ring-indigo-500"><span>JavaScript</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q4" value="d" class="text-indigo-600 focus:ring-indigo-500"><span>SQL</span></label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="bg-slate-50/80 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-semibold text-sm text-slate-800 mb-3">5. Дерекқорлармен (Database) жұмыс істеуге арналған стандартты сұраныс тілі:</p>
+                    <div class="space-y-2 text-sm text-slate-700">
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q5" value="a" required class="text-indigo-600 focus:ring-indigo-500"><span>SQL</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q5" value="b" class="text-indigo-600 focus:ring-indigo-500"><span>C++</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q5" value="c" class="text-indigo-600 focus:ring-indigo-500"><span>Python</span></label>
+                        <label class="flex items-center space-x-3 cursor-pointer p-2 hover:bg-white rounded-lg transition"><input type="radio" name="q5" value="d" class="text-indigo-600 focus:ring-indigo-500"><span>PHP</span></label>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-emerald-600/20">
+                    Нәтижені көру және Google Таблицаға сақтау
+                </button>
+            </form>
+        </div>
+
+        <!-- PAGE 3: Result Screen -->
+        <div id="page3" class="p-10 text-center hidden" aria-live="polite">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">✓</div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Тест сәтті аяқталды!</h2>
+            <p class="text-xs text-slate-500 mb-6">Нәтижеңіз Google Таблицаға автоматты түрде тіркелді.</p>
+            
+            <div id="resultContent" class="mb-6"></div>
+
+            <button onclick="restartTest()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-lg shadow-indigo-600/20 text-sm">
+                Қайтадан тапсыру
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbymwr7hxWv5geXzFeGSnnIXQZH1MkYlDxIxxlenK7-Dc40U5A1lPxlBW_wCJ4PuGnGbEw/exec";
+
+        const correctAnswers = {
+            q1: 'c',
+            q2: 'b',
+            q3: 'a',
+            q4: 'b',
+            q5: 'a'
+        };
+
+        let userData = {};
+
+        document.getElementById('testDate').valueAsDate = new Date();
+
+        function goToQuiz(event) {
+            event.preventDefault();
+            userData.fullName = document.getElementById('fullName').value.trim();
+            userData.className = document.getElementById('className').value.trim();
+            userData.testDate = document.getElementById('testDate').value;
+
+            document.getElementById('userInfoDisplay').innerText = `${userData.fullName} (${userData.className})`;
+            
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function submitQuiz(event) {
+            event.preventDefault();
+
+            let score = 0;
+            let total = 5;
+
+            for (let q in correctAnswers) {
+                let selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === correctAnswers[q]) {
+                    score++;
+                }
+            }
+
+            userData.score = `${score} / ${total}`;
+
+            let btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "Деректер жіберілуде...";
+
+            const payload = new URLSearchParams();
+            Object.entries(userData).forEach(([key, value]) => {
+                payload.append(key, value);
+            });
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: payload
+            })
+            .then(() => {
+                showResults(score, total);
+            })
+            .catch(error => {
+                console.error("Қате:", error);
+                showResults(score, total);
+            });
+        }
+
+        function showResults(score, total) {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            let resultHtml = `
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl inline-block w-full max-w-md text-left space-y-2">
+                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Қатысушы:</p>
+                    <p class="text-base font-bold text-slate-800">${userData.fullName}</p>
+                    <p class="text-xs text-slate-500">${userData.className} — Күні: ${userData.testDate}</p>
+                    <hr class="border-slate-200 my-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-slate-700">Жинаған ұпайыңыз:</span>
+                        <span class="text-2xl font-black text-indigo-600">${score} / ${total}</span>
+                    </div>
+                </div>
+            `;
+            document.getElementById('resultContent').innerHTML = resultHtml;
+        }
+
+        function restartTest() {
+            document.getElementById('userInfoForm').reset();
+            document.getElementById('quizForm').reset();
+            document.getElementById('testDate').valueAsDate = new Date();
+
+            let btn = document.getElementById('submitBtn');
+            btn.disabled = false;
+            btn.innerText = "Нәтижені көру және Google Таблицаға сақтау";
+
+            document.getElementById('page3').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
